@@ -19,7 +19,7 @@ public class PersonalityInsightsHelper {
 	public static final String PI_PASSWORD_PROP_NAME = "pi.password";
 
 	public static final String PI_URL_DEFAULT = "https://gateway.watsonplatform.net/personality-insights/api";
-	public static final String PI_PROFILE_API_PATH = "v2/profile";
+	public static final String PI_PROFILE_API_PATH = "v3/profile";
 
 	URI uri;
 	Client client;
@@ -45,6 +45,7 @@ public class PersonalityInsightsHelper {
 	public String getProfileJSON(String contentItemsJson, boolean includeRaw) {
 		return client.resource(uri)
 				.queryParam("include_raw", Boolean.toString(includeRaw))
+                                .queryParam("version", "2016-10-20")
 				.accept(MediaType.APPLICATION_JSON_TYPE)
 				.entity(contentItemsJson, MediaType.APPLICATION_JSON_TYPE)
 				.post(String.class);
@@ -53,6 +54,7 @@ public class PersonalityInsightsHelper {
 	public String getProfileCSV(String contentItemsJson, boolean includeHeaders) {
 		return client.resource(uri)
 				.queryParam("headers", Boolean.toString(includeHeaders))
+                                .queryParam("version", "2016-10-20")
 				.accept("text/csv")
 				.entity(contentItemsJson, MediaType.APPLICATION_JSON_TYPE)
 				.post(String.class);
